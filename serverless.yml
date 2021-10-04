@@ -1,0 +1,70 @@
+service: okta-customOTP
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: '20201221'
+  logRetentionInDays: 30
+  environment:
+    OKTA_TENANT_URL: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):okta_tenant}
+    OKTA_API_KEY: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):okta_api_key}
+    OKTA_FACTOR_ID: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):okta_factor_id}
+    ORIGINS: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):origins}
+    TWILIO_TOKEN: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):twilio_token}
+    
+resources:
+  Resources:
+    GatewayResponseDefault4XX: 
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+    GatewayResponseDefault5XX: 
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_5XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+    GatewayResponseBadParam: 
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: BAD_REQUEST_PARAMETERS
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+    GatewayResponseNotFound: 
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: RESOURCE_NOT_FOUND
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+
+functions:
+  enroll:
+    handler: src/totp/enroll.handler
+    events:
+      - http:
+          path: /totp/enroll
+          method: post
+          cors: true
+  deliver:
+    handler: src/totp/deliver.handler
+    events:
+      - http:
+          path: /totp/deliver
+          method: post
+          cors: true

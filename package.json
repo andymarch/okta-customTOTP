@@ -1,0 +1,21 @@
+{
+  "name": "okta-customtotp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@middy/core": "^2.5.1",
+    "@middy/http-cors": "^2.5.1",
+    "axios": "^0.22.0",
+    "base32-encode": "^2.0.0",
+    "hi-base32": "^0.5.1",
+    "randomstring": "^1.2.1",
+    "totp-generator": "0.0.10",
+    "winston": "^3.3.3"
+  }
+}
