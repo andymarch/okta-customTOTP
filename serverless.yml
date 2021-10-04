@@ -12,7 +12,6 @@ provider:
     OKTA_API_KEY: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):okta_api_key}
     OKTA_FACTOR_ID: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):okta_factor_id}
     ORIGINS: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):origins}
-    TWILIO_TOKEN: ${file(./config.${opt:stage, self:provider.stage, 'dev'}.json):twilio_token}
     
 resources:
   Resources:

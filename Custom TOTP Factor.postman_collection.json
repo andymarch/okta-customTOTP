@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "311db3f8-c15c-4678-946d-00589c270f37",
+		"name": "Custom TOTP Factor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Deliver OTP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userid\": \"{{login}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{endpoint}}/dev/totp/deliver",
+					"protocol": "https",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"dev",
+						"totp",
+						"deliver"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enroll OTP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userid\": \"{{login}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{endpoint}}/dev/totp/enroll",
+					"protocol": "https",
+					"host": [
+						"{{endpoint}}"
+					],
+					"path": [
+						"dev",
+						"totp",
+						"enroll"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

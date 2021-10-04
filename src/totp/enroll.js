@@ -2,7 +2,6 @@ const middy = require('@middy/core')
 const cors = require('@middy/http-cors')
 const winston = require("winston")
 const axios = require('axios')
-var randomstring = require("randomstring");
 var base32 = require('hi-base32');
 var crypto = require('crypto');
 
